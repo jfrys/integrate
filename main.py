@@ -26,15 +26,13 @@ cur = 0
 while True:
     try:
         with open(txtFile) as f:
-            f.seek(0, 2)
-            if f.tell() < cur:
-                f.seek(0, 0)
-            else:
-                f.seek(cur, 0)
-            for line in f:
-                pdf.cell(200, 10, txt=line, ln=1, align='C')
+            contents = f.readlines()
+            for line in contents:
+                pdf.cell(200, 10, txt=line, ln=2, align='C')
+            for line in contents:
+                pdf.cell(0, 0, txt='', ln=0, align='C')
+
                 pdf.output(pdfFile)
-            cur = f.tell()
     except IOError as e:
         pass
     time.sleep(1)
